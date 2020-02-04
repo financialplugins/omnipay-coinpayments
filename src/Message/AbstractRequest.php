@@ -3,62 +3,72 @@
 namespace Omnipay\Coinpayments\Message;
 
 use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
-use Omnipay\Common\Exception\InvalidRequestException;
 
 abstract class AbstractRequest extends OmnipayAbstractRequest
 {
     private $version = 1;
     private $endpoint = 'https://www.coinpayments.net/api.php';
 
+    protected $responseClass = Response::class;
+
     abstract protected function getCommand(): string;
 
-    public function getVersion()
+    public function getVersion(): int
     {
         return $this->version;
     }
-    
-    public function getEndpoint()
+
+    public function getEndpoint(): string
     {
         return $this->endpoint;
     }
 
-    public function getPublicKey()
+    public function getPublicKey(): string
     {
         return $this->getParameter('public_key');
     }
 
-    public function getPrivateKey()
+    public function setPublicKey(string $value)
+    {
+        return $this->setParameter('public_key', $value);
+    }
+
+    public function getPrivateKey(): string
     {
         return $this->getParameter('private_key');
     }
 
+    public function setPrivateKey(string $value)
+    {
+        return $this->setParameter('private_key', $value);
+    }
+
     public function getData()
     {
-        $data = parent::getData();
-
-        $data['version'] = $this->getCommand();
-        $data['cmd'] = $this->getCommand();
-        $data['key'] = $this->getPublicKey();
-        $data['format'] = 'json';
-
-        return $data;
+        return [
+            'version'   => $this->getVersion(),
+            'cmd'       => $this->getCommand(),
+            'key'       => $this->getPublicKey(),
+            'format'    => 'json'
+        ];
     }
 
     public function sendData($data)
     {
         $body = http_build_query($data, '', '&');
-        $hmac = hash_hmac('sha512', $body, $this->getPrivateKey());
-        $headers = ['HMAC' => $hmac];
-        
-        dd($this->getPrivateKey());
+
+        $headers = [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'HMAC' => hash_hmac('sha512', $body, $this->getPrivateKey())
+        ];
 
         $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), $headers, $body);
 
-        return $this->createResponse($httpResponse->getBody()->getContents(), $httpResponse->getHeaders());
+        return $this->createResponse(json_decode($httpResponse->getBody()->getContents(), TRUE), $httpResponse->getHeaders());
     }
 
-    protected function createResponse($data, $headers = [])
+    protected function createResponse(array $data, array $headers = []): Response
     {
-        return $this->response = new Response($this, $data, $headers);
+        return $this->response = new $this->responseClass($this, $data, $headers);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Omnipay\Coinpayments;
 
-use Omnipay\Coinpayments\Message\AccountInfoRequest;
+use Omnipay\Coinpayments\Message\RatesRequest;
+use Omnipay\Coinpayments\Message\TransactionRequest;
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Coinpayments\Message\AccountInfoRequest;
 
 class Gateway extends AbstractGateway
 {
@@ -62,8 +64,18 @@ class Gateway extends AbstractGateway
         return $this->setParameter('secret_key', $value);
     }
 
-    public function getAccountInfo(array $parameters)
+    public function accountInfo(array $parameters = [])
     {
         return $this->createRequest(AccountInfoRequest::class, $parameters);
+    }
+
+    public function transaction(array $parameters = [])
+    {
+        return $this->createRequest(TransactionRequest::class, $parameters);
+    }
+
+    public function rates(array $parameters = [])
+    {
+        return $this->createRequest(RatesRequest::class, $parameters);
     }
 }
