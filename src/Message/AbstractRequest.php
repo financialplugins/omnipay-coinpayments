@@ -13,6 +13,18 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
 
     abstract protected function getCommand(): string;
 
+    /**
+     * Get a single parameter.
+     * Overriding the parent method to change its visibility from protected to public
+     *
+     * @param string $key The parameter key
+     * @return mixed
+     */
+    /*public function getParameter($key)
+    {
+        return parent::getParameter($key);
+    }*/
+
     public function getVersion(): int
     {
         return $this->version;
@@ -64,10 +76,10 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
 
         $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), $headers, $body);
 
-        return $this->createResponse(json_decode($httpResponse->getBody()->getContents(), TRUE), $httpResponse->getHeaders());
+        return $this->createResponse(json_decode($httpResponse->getBody()->getContents()), $httpResponse->getHeaders());
     }
 
-    protected function createResponse(array $data, array $headers = []): Response
+    protected function createResponse($data, array $headers = []): Response
     {
         return $this->response = new $this->responseClass($this, $data, $headers);
     }

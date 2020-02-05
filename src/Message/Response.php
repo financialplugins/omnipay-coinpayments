@@ -8,8 +8,8 @@ class Response extends AbstractResponse
 {
     public function isSuccessful()
     {
-        return isset($this->data['error']) && $this->data['error'] == 'ok' && isset($this->data['result']);
-    }
+        return isset($this->data->error) && $this->data->error == 'ok' && isset($this->data->result);
+    }    
 
     /**
      * Get error message
@@ -18,7 +18,7 @@ class Response extends AbstractResponse
      */
     public function getMessage()
     {
-        return isset($this->data['error']) && $this->data['error'] != 'ok' ? $this->data['error'] : NULL;
+        return isset($this->data->error) && $this->data->error != 'ok' ? $this->data->error : NULL;
     }
 
     /**
@@ -28,6 +28,6 @@ class Response extends AbstractResponse
      */
     public function getData()
     {
-        return $this->data['result'];
+        return $this->data->result;
     }
 }

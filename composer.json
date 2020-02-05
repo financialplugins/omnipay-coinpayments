@@ -3,15 +3,16 @@
   "type": "library",
   "description": "Coinpayments driver for the Omnipay payment processing library",
   "keywords": [
-    "coinpayments",
     "omnipay",
-    "payment gateway"
+    "coinpayments",
+    "payment gateway",
+    "crypto"
   ],
   "homepage": "https://github.com/financialplugins/omnipay-coinpayments",
   "license": "MIT",
   "authors": [
     {
-      "name": "Alex",
+      "name": "FinancialPlugins",
       "email": "info@financialplugins.com"
     }
   ],
