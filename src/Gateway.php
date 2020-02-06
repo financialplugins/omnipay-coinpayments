@@ -6,6 +6,7 @@ use Omnipay\Coinpayments\Message\FetchBalanceRequest;
 use Omnipay\Coinpayments\Message\FetchCurrenciesRequest;
 use Omnipay\Coinpayments\Message\CreateTransactionRequest;
 use Omnipay\Coinpayments\Message\FetchAccountInfoRequest;
+use Omnipay\Coinpayments\Message\FetchTransactionRequest;
 use Omnipay\Common\AbstractGateway;
 
 class Gateway extends AbstractGateway
@@ -83,5 +84,10 @@ class Gateway extends AbstractGateway
     public function fetchBalance(array $parameters = [])
     {
         return $this->createRequest(FetchBalanceRequest::class, $parameters);
+    }
+
+    public function fetchTransaction(array $parameters = [])
+    {
+        return $this->createRequest(FetchTransactionRequest::class, $parameters);
     }
 }
