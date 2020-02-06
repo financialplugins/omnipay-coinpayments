@@ -2,7 +2,7 @@
 
 namespace Omnipay\Coinpayments\Message;
 
-class TransactionRequest extends AbstractRequest
+class CreateTransactionRequest extends AbstractRequest
 {
     protected $responseClass = TransactionResponse::class;
 

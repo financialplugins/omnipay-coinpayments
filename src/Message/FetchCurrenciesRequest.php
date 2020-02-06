@@ -3,7 +3,7 @@
 
 namespace Omnipay\Coinpayments\Message;
 
-class CurrenciesRequest extends AbstractRequest
+class FetchCurrenciesRequest extends AbstractRequest
 {
     protected function getCommand(): string
     {

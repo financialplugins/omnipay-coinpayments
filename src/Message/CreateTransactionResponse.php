@@ -2,7 +2,7 @@
 
 namespace Omnipay\Coinpayments\Message;
 
-class TransactionResponse extends Response
+class CreateTransactionResponse extends Response
 {
     public function isSuccessful()
     {

@@ -3,10 +3,10 @@
 
 namespace Omnipay\Coinpayments\Message;
 
-class AccountInfoRequest extends AbstractRequest
+class FetchBalanceRequest extends AbstractRequest
 {
     protected function getCommand(): string
     {
-        return 'get_basic_info';
-    }    
+        return 'balances';
+    }
 }

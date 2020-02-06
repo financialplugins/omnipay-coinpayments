@@ -2,10 +2,11 @@
 
 namespace Omnipay\Coinpayments;
 
-use Omnipay\Coinpayments\Message\CurrenciesRequest;
-use Omnipay\Coinpayments\Message\TransactionRequest;
+use Omnipay\Coinpayments\Message\FetchBalanceRequest;
+use Omnipay\Coinpayments\Message\FetchCurrenciesRequest;
+use Omnipay\Coinpayments\Message\CreateTransactionRequest;
+use Omnipay\Coinpayments\Message\FetchAccountInfoRequest;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Coinpayments\Message\AccountInfoRequest;
 
 class Gateway extends AbstractGateway
 {
@@ -66,16 +67,21 @@ class Gateway extends AbstractGateway
 
     public function fetchAccountInfo(array $parameters = [])
     {
-        return $this->createRequest(AccountInfoRequest::class, $parameters);
+        return $this->createRequest(FetchAccountInfoRequest::class, $parameters);
     }
 
     public function createTransaction(array $parameters = [])
     {
-        return $this->createRequest(TransactionRequest::class, $parameters);
+        return $this->createRequest(CreateTransactionRequest::class, $parameters);
     }
 
     public function fetchCurrencies(array $parameters = [])
     {
-        return $this->createRequest(CurrenciesRequest::class, $parameters);
+        return $this->createRequest(FetchCurrenciesRequest::class, $parameters);
+    }
+
+    public function fetchBalance(array $parameters = [])
+    {
+        return $this->createRequest(FetchBalanceRequest::class, $parameters);
     }
 }
