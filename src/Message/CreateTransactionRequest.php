@@ -4,7 +4,7 @@ namespace Omnipay\Coinpayments\Message;
 
 class CreateTransactionRequest extends AbstractRequest
 {
-    protected $responseClass = TransactionResponse::class;
+    protected $responseClass = CreateTransactionResponse::class;
 
     protected function getCommand(): string
     {
