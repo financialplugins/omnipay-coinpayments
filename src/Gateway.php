@@ -2,6 +2,7 @@
 
 namespace Omnipay\Coinpayments;
 
+use Omnipay\Coinpayments\Message\CreateWithdrawalRequest;
 use Omnipay\Coinpayments\Message\FetchBalanceRequest;
 use Omnipay\Coinpayments\Message\FetchCurrenciesRequest;
 use Omnipay\Coinpayments\Message\CreateTransactionRequest;
@@ -71,11 +72,6 @@ class Gateway extends AbstractGateway
         return $this->createRequest(FetchAccountInfoRequest::class, $parameters);
     }
 
-    public function createTransaction(array $parameters = [])
-    {
-        return $this->createRequest(CreateTransactionRequest::class, $parameters);
-    }
-
     public function fetchCurrencies(array $parameters = [])
     {
         return $this->createRequest(FetchCurrenciesRequest::class, $parameters);
@@ -86,8 +82,31 @@ class Gateway extends AbstractGateway
         return $this->createRequest(FetchBalanceRequest::class, $parameters);
     }
 
+    public function createTransaction(array $parameters = [])
+    {
+        return $this->createRequest(CreateTransactionRequest::class, $parameters);
+    }
+
     public function fetchTransaction(array $parameters = [])
     {
         return $this->createRequest(FetchTransactionRequest::class, $parameters);
+    }
+
+    public function createWithdrawal(array $parameters = [])
+    {
+        return $this->createRequest(CreateWithdrawalRequest::class, $parameters);
+    }
+
+    /**
+     * Check whether IPN callback has a valid signature
+     *
+     * @param $content - request payload ($request->getContent())
+     * @param $hmacHeader - HMAC header ($request->header('HMAC'))
+     * @return bool
+     */
+    public function isSignatureValid($content, $hmacHeader): bool
+    {
+        $hmac = hash_hmac('sha512', $content, $this->getSecretKey());
+        return hash_equals($hmac, $hmacHeader);
     }
 }

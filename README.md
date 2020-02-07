@@ -68,7 +68,7 @@ if ($response->isSuccessful()) {
 
 ```
 $response = $gateway
-    ->fetchTransaction([
+    ->createTransaction([
         'amount'            => '100',
         'currency'          => 'USD',
         'payment_currency'  => 'BTC',
@@ -98,6 +98,43 @@ if ($response->isRedirect()) {
     $errorMessage = $response->getMessage();
 }
 ```
+### Create Withdrawal
+
+```
+$response = $gateway
+    ->createWithdrawal([
+        'amount'            => '100',
+        'currency'          => 'USD',
+        'payment_currency'  => 'BTC',
+        'description'       => 'Payment description',
+        'address'           => 'XXXXXXXXXX',
+        'auto_confirm'      => 0,
+        'notify_url'        => 'https://yourwebsite/webhook'
+    ])
+    ->send();
+
+if ($response->isSuccessful()) {
+    $data = $response->getData();
+
+    EXAMPLE RESPONSE:
+    {
+       "error":"ok",
+       "result":{
+          "id":"hex string",
+          "status":0,
+          "amount":1.00,
+       }
+    }
+
+} else {
+    $errorMessage = $response->getMessage();
+}
+```
+### Verify IPN signature
+```
+$success = $gateway->isSignatureValid($payload, $hmacHeader)
+```
+
 ## Support
 If you are having general issues with Omnipay, we suggest posting on [Stack Overflow](http://stackoverflow.com/). Be sure to add the [omnipay](omnipay) tag so it can be easily found.
 
