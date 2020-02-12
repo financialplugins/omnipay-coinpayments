@@ -8,6 +8,7 @@ use Omnipay\Coinpayments\Message\FetchCurrenciesRequest;
 use Omnipay\Coinpayments\Message\CreateTransactionRequest;
 use Omnipay\Coinpayments\Message\FetchAccountInfoRequest;
 use Omnipay\Coinpayments\Message\FetchTransactionRequest;
+use Omnipay\Coinpayments\Message\FetchWithdrawalRequest;
 use Omnipay\Common\AbstractGateway;
 
 class Gateway extends AbstractGateway
@@ -95,6 +96,11 @@ class Gateway extends AbstractGateway
     public function createWithdrawal(array $parameters = [])
     {
         return $this->createRequest(CreateWithdrawalRequest::class, $parameters);
+    }
+
+    public function fetchWithdrawal(array $parameters = [])
+    {
+        return $this->createRequest(FetchWithdrawalRequest::class, $parameters);
     }
 
     /**

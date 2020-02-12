@@ -64,6 +64,19 @@ if ($response->isSuccessful()) {
     $errorMessage = $response->getMessage();
 }
 ```
+### Fetch Withdrawal Information
+
+```
+$response = $gateway
+    ->fetchWithdrawal(['withdrawalReference' => '...'])
+    ->send();
+
+if ($response->isSuccessful()) {
+    $data = $response->getData();
+} else {
+    $errorMessage = $response->getMessage();
+}
+```
 ### Create Transaction
 
 ```
